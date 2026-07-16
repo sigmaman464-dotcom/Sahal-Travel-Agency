@@ -1,1 +1,915 @@
-in
+<!DOCTYPE html>
+<html lang="en" class="light scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Sahal Travel Agency | Premium Travel Booking</title>
+    <meta name="description" content="Premium international travel agency in Jigjiga, Somali Region. Book flights, hotels, airport transfers, and visa assistance.">
+    <meta name="keywords" content="Travel, Flights, Hotels, Jigjiga, Ethiopia, Visa, Airport Transfer">
+    
+    <meta property="og:title" content="Sahal Travel Agency">
+    <meta property="og:description" content="Seamless flights, executive stays, elite transfers, and fast visas.">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            gold: '#D4AF37',
+                            dark: '#0B0F19',
+                            light: '#F8FAFC',
+                            accent: '#1E3A8A'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif']
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'spin-slow': 'spin 3s linear infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        body { -webkit-font-smoothing: antialiased; }
+        
+        /* Premium Glassmorphism */
+        .glass {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .dark .glass {
+            background: rgba(11, 15, 25, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+        }
+        .dark .glass-card {
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Forms & Inputs */
+        .input-group { position: relative; margin-bottom: 1.2rem; }
+        .input-group input, .input-group select, .input-group textarea {
+            width: 100%;
+            padding: 1.2rem 1rem 0.5rem;
+            background: transparent;
+            border: 1px solid #cbd5e1;
+            border-radius: 0.75rem;
+            outline: none;
+            transition: all 0.3s;
+            color: inherit;
+        }
+        .dark .input-group input, .dark .input-group select, .dark .input-group textarea { border-color: #334155; }
+        .input-group input:focus, .input-group select:focus, .input-group textarea:focus { border-color: #D4AF37; box-shadow: 0 0 0 1px #D4AF37; }
+        .input-group label {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #64748b;
+            transition: all 0.3s;
+            pointer-events: none;
+            font-size: 0.875rem;
+        }
+        .input-group textarea ~ label { top: 1.5rem; }
+        .input-group input:focus ~ label, .input-group input:not(:placeholder-shown) ~ label,
+        .input-group select:focus ~ label, .input-group select:valid ~ label,
+        .input-group textarea:focus ~ label, .input-group textarea:not(:placeholder-shown) ~ label {
+            top: 0.35rem; font-size: 0.7rem; color: #D4AF37; font-weight: 600;
+        }
+
+        /* Navigation Active State */
+        .nav-link.active { color: #D4AF37; font-weight: 700; position: relative; }
+        .nav-link.active::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 100%; height: 2px; background: #D4AF37; border-radius: 2px; }
+
+        /* Toast Notifications */
+        #toast-container { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 9999; display: flex; flex-direction: column; gap: 10px; }
+        .toast { background: #333; color: #fff; padding: 12px 24px; border-radius: 50px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); font-size: 14px; opacity: 0; transform: translateY(20px); transition: all 0.3s ease; }
+        .toast.show { opacity: 1; transform: translateY(0); }
+
+        /* Animations */
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        .success-circle { stroke-dasharray: 166; stroke-dashoffset: 166; stroke-width: 2; stroke-miterlimit: 10; stroke: #4bb71b; fill: none; animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards; }
+        .success-check { transform-origin: 50% 50%; stroke-dasharray: 48; stroke-dashoffset: 48; animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.6s forwards; }
+        @keyframes stroke { 100% { stroke-dashoffset: 0; } }
+        
+        /* Hide scrollbar for select elements */
+        select { -webkit-appearance: none; -moz-appearance: none; appearance: none; }
+    </style>
+</head>
+<body class="bg-brand-light text-gray-900 dark:bg-brand-dark dark:text-white transition-colors duration-300">
+
+    <div id="toast-container"></div>
+
+    <header id="main-header" class="fixed w-full z-50 transition-all duration-300 bg-transparent text-white py-4">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center">
+                <a href="#home" class="flex-shrink-0 flex items-center gap-2 text-2xl font-bold tracking-tighter z-50">
+                    <i class="fa-solid fa-plane-departure text-brand-gold"></i>
+                    <span class="text-white drop-shadow-md header-text">SAHAL</span>
+                </a>
+
+                <nav class="hidden lg:flex space-x-6 items-center glass px-8 py-3 rounded-full shadow-lg">
+                    <a href="#home" class="nav-link hover:text-brand-gold transition text-sm font-medium">Home</a>
+                    <a href="#flights" class="nav-link hover:text-brand-gold transition text-sm font-medium">Flights</a>
+                    <a href="#hotels" class="nav-link hover:text-brand-gold transition text-sm font-medium">Hotel</a>
+                    <a href="#transfers" class="nav-link hover:text-brand-gold transition text-sm font-medium">Airport Transfer</a>
+                    <a href="#visa" class="nav-link hover:text-brand-gold transition text-sm font-medium">Visa</a>
+                    <a href="#contact" class="nav-link hover:text-brand-gold transition text-sm font-medium">Contact</a>
+                </nav>
+
+                <div class="flex items-center space-x-4 z-50">
+                    <a href="tel:+251964105458" class="hidden md:flex items-center space-x-2 text-sm font-bold bg-brand-gold text-black px-5 py-2.5 rounded-full hover:bg-yellow-500 transition shadow-lg hover:shadow-brand-gold/30">
+                        <i class="fa fa-phone"></i> <span>+251 964 105 458</span>
+                    </a>
+                    <button id="themeToggle" class="p-2.5 rounded-full glass hover:bg-white/20 transition flex items-center justify-center w-10 h-10">
+                        <i class="fa-solid fa-moon text-sm" id="themeIcon"></i>
+                    </button>
+                    <button id="mobileMenuBtn" class="lg:hidden p-2.5 rounded-full glass hover:bg-white/20 transition w-10 h-10">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div id="mobileMenu" class="hidden absolute top-full left-4 right-4 glass-card mt-2 rounded-2xl overflow-hidden flex flex-col p-2 shadow-2xl origin-top transition-transform">
+                <a href="#home" class="mobile-link block px-4 py-3 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 font-medium">Home</a>
+                <a href="#flights" class="mobile-link block px-4 py-3 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 font-medium">Flights</a>
+                <a href="#hotels" class="mobile-link block px-4 py-3 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 font-medium">Hotel</a>
+                <a href="#transfers" class="mobile-link block px-4 py-3 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 font-medium">Airport Transfer</a>
+                <a href="#visa" class="mobile-link block px-4 py-3 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 font-medium">Visa</a>
+                <a href="#contact" class="mobile-link block px-4 py-3 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 font-medium">Contact</a>
+            </div>
+        </div>
+    </header>
+
+    <section id="home" class="relative min-h-screen flex items-center justify-center pt-20">
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=2000" alt="Travel Background" class="w-full h-full object-cover object-center">
+            <div class="absolute inset-0 bg-gradient-to-b from-black/80 via-black/50 to-brand-light dark:to-brand-dark"></div>
+        </div>
+        
+        <div class="relative z-10 text-center px-4 max-w-4xl mx-auto reveal mt-10">
+            <span class="px-5 py-1.5 rounded-full glass text-white text-xs font-bold tracking-widest uppercase mb-6 inline-block shadow-lg">Premium Travel Agency</span>
+            <h1 class="text-5xl md:text-7xl lg:text-8xl font-extrabold text-white mb-6 leading-tight">
+                Explore The World <br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-gold to-yellow-200">With Sahal</span>
+            </h1>
+            <p class="text-lg md:text-xl text-gray-300 mb-10 font-light max-w-2xl mx-auto">Your exclusive gateway in Jigjiga. We provide seamless flights, executive stays, elite transfers, and premium visa services.</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#flights" class="px-8 py-4 bg-brand-gold text-black font-bold rounded-full hover:bg-yellow-500 transition shadow-lg hover:shadow-brand-gold/40 hover:-translate-y-1">Book a Flight</a>
+                <a href="#hotels" class="px-8 py-4 glass text-white font-bold rounded-full hover:bg-white/20 transition shadow-lg hover:-translate-y-1">Reserve Hotel</a>
+            </div>
+        </div>
+    </section>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-20 space-y-32 -mt-10">
+        
+        <section id="flights" class="scroll-mt-28 reveal">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl md:text-4xl font-black mb-4">Search Premium Flights</h2>
+                <p class="text-gray-500 dark:text-gray-400 max-w-2xl mx-auto">Find the best routes at the most competitive rates in Ethiopian Birr.</p>
+            </div>
+
+            <div class="glass-card p-6 md:p-8 rounded-3xl shadow-2xl">
+                <form id="flight-form" onsubmit="handleFlightSearch(event)">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                        <div class="input-group mb-0"><input type="text" id="f-name" required placeholder=" "><label>Passenger Full Name</label></div>
+                        <div class="input-group mb-0"><input type="tel" id="f-phone" required placeholder=" "><label>Phone Number</label></div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+                        <div class="input-group mb-0"><input type="text" id="f-dep" required placeholder=" "><label>Departure City/Airport</label></div>
+                        <div class="input-group mb-0"><input type="text" id="f-dest" required placeholder=" "><label>Destination City/Airport</label></div>
+                        <div class="input-group mb-0"><input type="date" id="f-date" required><label>Departure Date</label></div>
+                        <div class="input-group mb-0"><input type="date" id="f-ret"><label>Return Date (Optional)</label></div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                        <div class="input-group mb-0"><input type="number" id="f-pax" min="1" value="1" required oninput="calcFlightPreview()"><label>Passengers</label></div>
+                        <div class="input-group mb-0 md:col-span-2">
+                            <select id="f-class" required onchange="calcFlightPreview()">
+                                <option value="Economy">Economy Class (15,000 ETB/pax)</option>
+                                <option value="Business">Business Class (35,000 ETB/pax)</option>
+                                <option value="FirstClass">First Class (60,000 ETB/pax)</option>
+                            </select>
+                            <label>Travel Class</label>
+                            <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400"><i class="fa-solid fa-chevron-down"></i></div>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col md:flex-row justify-between items-center bg-gray-50 dark:bg-slate-800/50 p-6 rounded-2xl border border-gray-200 dark:border-gray-700">
+                        <div class="text-center md:text-left mb-4 md:mb-0">
+                            <p class="text-sm text-gray-500 uppercase tracking-wide font-semibold mb-1">Estimated Total Price</p>
+                            <h3 class="text-3xl font-black text-brand-gold" id="f-total-price">15,000 ETB</h3>
+                        </div>
+                        <button type="submit" class="w-full md:w-auto px-10 py-4 bg-brand-accent hover:bg-blue-800 text-white font-bold rounded-xl transition-all shadow-lg hover:shadow-brand-accent/30 hover:-translate-y-1 text-lg flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-plane"></i> Book Now
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <section id="hotels" class="scroll-mt-28 reveal pt-10 border-t border-gray-200 dark:border-gray-800">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl md:text-4xl font-black mb-4">Premium Hotel Booking</h2>
+                <p class="text-gray-500 dark:text-gray-400 max-w-2xl mx-auto">Experience luxury and comfort with our handpicked exclusive rooms.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto mb-16">
+                <div class="glass-card rounded-3xl overflow-hidden hover:-translate-y-2 transition-transform duration-300 shadow-xl group">
+                    <div class="h-64 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?q=80&w=800" alt="Single Room" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute top-4 right-4 bg-white/90 dark:bg-black/80 backdrop-blur px-3 py-1 rounded-full text-xs font-bold shadow-lg">1 Guest</div>
+                    </div>
+                    <div class="p-8">
+                        <h3 class="text-2xl font-bold mb-2">Single Room</h3>
+                        <p class="text-gray-500 dark:text-gray-400 text-sm mb-6 line-clamp-2">Perfect for solo travelers looking for comfort, peace, and premium amenities.</p>
+                        <div class="flex justify-between items-end border-t border-gray-200 dark:border-gray-700 pt-6">
+                            <div><p class="text-2xl font-black text-brand-gold">1,500 ETB <span class="text-sm font-normal text-gray-500">/night</span></p></div>
+                            <button onclick="openHotelModal('Single Room', 1500)" class="px-8 py-3 bg-brand-accent text-white font-bold rounded-xl hover:bg-blue-800 transition shadow-lg hover:shadow-brand-accent/30">Book Room</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="glass-card rounded-3xl overflow-hidden hover:-translate-y-2 transition-transform duration-300 shadow-xl group">
+                    <div class="h-64 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=800" alt="Double Room" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute top-4 right-4 bg-white/90 dark:bg-black/80 backdrop-blur px-3 py-1 rounded-full text-xs font-bold shadow-lg">2-4 Guests</div>
+                    </div>
+                    <div class="p-8">
+                        <h3 class="text-2xl font-bold mb-2">Double Room</h3>
+                        <p class="text-gray-500 dark:text-gray-400 text-sm mb-6 line-clamp-2">Spacious luxury designed for couples or small families seeking the ultimate stay.</p>
+                        <div class="flex justify-between items-end border-t border-gray-200 dark:border-gray-700 pt-6">
+                            <div><p class="text-2xl font-black text-brand-gold">2,500 ETB <span class="text-sm font-normal text-gray-500">/night</span></p></div>
+                            <button onclick="openHotelModal('Double Room', 2500)" class="px-8 py-3 bg-brand-accent text-white font-bold rounded-xl hover:bg-blue-800 transition shadow-lg hover:shadow-brand-accent/30">Book Room</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h3 class="text-2xl font-bold text-center mb-8">Premium Hotel Facilities</h3>
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                    <div class="glass-card p-4 text-center rounded-2xl hover:border-brand-gold transition flex flex-col items-center justify-center gap-2"><i class="fa-solid fa-wifi text-2xl text-brand-gold"></i><span class="text-xs font-semibold">Fast WiFi</span></div>
+                    <div class="glass-card p-4 text-center rounded-2xl hover:border-brand-gold transition flex flex-col items-center justify-center gap-2"><i class="fa-solid fa-utensils text-2xl text-brand-gold"></i><span class="text-xs font-semibold">Restaurant</span></div>
+                    <div class="glass-card p-4 text-center rounded-2xl hover:border-brand-gold transition flex flex-col items-center justify-center gap-2"><i class="fa-solid fa-mug-hot text-2xl text-brand-gold"></i><span class="text-xs font-semibold">Breakfast</span></div>
+                    <div class="glass-card p-4 text-center rounded-2xl hover:border-brand-gold transition flex flex-col items-center justify-center gap-2"><i class="fa-solid fa-burger text-2xl text-brand-gold"></i><span class="text-xs font-semibold">Lunch & Dinner</span></div>
+                    <div class="glass-card p-4 text-center rounded-2xl hover:border-brand-gold transition flex flex-col items-center justify-center gap-2"><i class="fa-solid fa-snowflake text-2xl text-brand-gold"></i><span class="text-xs font-semibold">Air Condition</span></div>
+                    <div class="glass-card p-4 text-center rounded-2xl hover:border-brand-gold transition flex flex-col items-center justify-center gap-2"><i class="fa-solid fa-bed text-2xl text-brand-gold"></i><span class="text-xs font-semibold">Comfortable Beds</span></div>
+                    <div class="glass-card p-4 text-center rounded-2xl hover:border-brand-gold transition flex flex-col items-center justify-center gap-2"><i class="fa-solid fa-volume-xmark text-2xl text-brand-gold"></i><span class="text-xs font-semibold">Quiet Environment</span></div>
+                    <div class="glass-card p-4 text-center rounded-2xl hover:border-brand-gold transition flex flex-col items-center justify-center gap-2"><i class="fa-solid fa-clock text-2xl text-brand-gold"></i><span class="text-xs font-semibold">24 Hours Reception</span></div>
+                    <div class="glass-card p-4 text-center rounded-2xl hover:border-brand-gold transition flex flex-col items-center justify-center gap-2"><i class="fa-solid fa-square-parking text-2xl text-brand-gold"></i><span class="text-xs font-semibold">Free Parking</span></div>
+                    <div class="glass-card p-4 text-center rounded-2xl hover:border-brand-gold transition flex flex-col items-center justify-center gap-2"><i class="fa-solid fa-children text-2xl text-brand-gold"></i><span class="text-xs font-semibold">Family Friendly</span></div>
+                    <div class="glass-card p-4 text-center rounded-2xl hover:border-brand-gold transition flex flex-col items-center justify-center gap-2"><i class="fa-solid fa-bell-concierge text-2xl text-brand-gold"></i><span class="text-xs font-semibold">Room Service</span></div>
+                    <div class="glass-card p-4 text-center rounded-2xl hover:border-brand-gold transition flex flex-col items-center justify-center gap-2"><i class="fa-solid fa-shield-halved text-2xl text-brand-gold"></i><span class="text-xs font-semibold">Security</span></div>
+                    <div class="glass-card p-4 text-center rounded-2xl hover:border-brand-gold transition flex flex-col items-center justify-center gap-2"><i class="fa-solid fa-broom text-2xl text-brand-gold"></i><span class="text-xs font-semibold">Daily Cleaning</span></div>
+                    <div class="glass-card p-4 text-center rounded-2xl hover:border-brand-gold transition flex flex-col items-center justify-center gap-2"><i class="fa-solid fa-shower text-2xl text-brand-gold"></i><span class="text-xs font-semibold">Hot Water</span></div>
+                    <div class="glass-card p-4 text-center rounded-2xl hover:border-brand-gold transition flex flex-col items-center justify-center gap-2 md:col-span-2 lg:col-span-2"><i class="fa-solid fa-headset text-2xl text-brand-gold"></i><span class="text-xs font-semibold">Premium Customer Service</span></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="transfers" class="scroll-mt-28 reveal pt-10 border-t border-gray-200 dark:border-gray-800">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl md:text-4xl font-black mb-4">Elite Airport Transfers</h2>
+                <p class="text-gray-500 dark:text-gray-400 max-w-2xl mx-auto">Reliable, safe, and premium transportation to and from the airport.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+                <div class="glass-card p-6 md:p-8 rounded-3xl border-t-4 border-t-brand-accent shadow-xl relative overflow-hidden">
+                    <div class="absolute -right-6 -top-6 text-brand-accent/10 text-9xl pointer-events-none"><i class="fa-solid fa-plane-arrival"></i></div>
+                    <div class="relative z-10 mb-8 flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full bg-brand-accent text-white flex items-center justify-center text-xl"><i class="fa-solid fa-car"></i></div>
+                        <h3 class="text-2xl font-bold">Airport Pickup</h3>
+                    </div>
+                    <form onsubmit="handleTransfer(event, 'Pickup')">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <div class="input-group md:col-span-2"><input type="text" id="tp-name" required placeholder=" "><label>Full Name</label></div>
+                            <div class="input-group"><input type="tel" id="tp-phone" required placeholder=" "><label>Phone Number</label></div>
+                            <div class="input-group"><input type="number" id="tp-pax" required placeholder=" " min="1"><label>Passengers</label></div>
+                            <div class="input-group"><input type="text" id="tp-airport" required placeholder=" "><label>Airport Name</label></div>
+                            <div class="input-group"><input type="text" id="tp-flight" required placeholder=" "><label>Flight Number</label></div>
+                            <div class="input-group md:col-span-2">
+                                <select id="tp-time-opt" onchange="toggleTransferTime('tp')" required>
+                                    <option value="Now">Now (Immediate Pickup)</option>
+                                    <option value="Later">Schedule Later</option>
+                                </select><label>Timing</label>
+                            </div>
+                        </div>
+                        <div id="tp-time-fields" class="hidden grid-cols-2 gap-3 mt-0">
+                            <div class="input-group"><input type="date" id="tp-date"><label>Date</label></div>
+                            <div class="input-group"><input type="time" id="tp-time"><label>Time</label></div>
+                        </div>
+                        <button type="submit" class="w-full py-4 mt-4 bg-brand-accent hover:bg-blue-800 text-white font-bold rounded-xl shadow-lg transition flex justify-center items-center gap-2"><i class="fab fa-whatsapp text-xl"></i> Book Pickup via WhatsApp</button>
+                    </form>
+                </div>
+
+                <div class="glass-card p-6 md:p-8 rounded-3xl border-t-4 border-t-brand-gold shadow-xl relative overflow-hidden">
+                    <div class="absolute -right-6 -top-6 text-brand-gold/10 text-9xl pointer-events-none"><i class="fa-solid fa-plane-departure"></i></div>
+                    <div class="relative z-10 mb-8 flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full bg-brand-gold text-black flex items-center justify-center text-xl"><i class="fa-solid fa-taxi"></i></div>
+                        <h3 class="text-2xl font-bold">Airport Drop-off</h3>
+                    </div>
+                    <form onsubmit="handleTransfer(event, 'Dropoff')">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <div class="input-group md:col-span-2"><input type="text" id="td-name" required placeholder=" "><label>Full Name</label></div>
+                            <div class="input-group"><input type="tel" id="td-phone" required placeholder=" "><label>Phone Number</label></div>
+                            <div class="input-group"><input type="number" id="td-pax" required placeholder=" " min="1"><label>Passengers</label></div>
+                            <div class="input-group"><input type="text" id="td-loc" required placeholder=" "><label>Pickup Address</label></div>
+                            <div class="input-group"><input type="text" id="td-airport" required placeholder=" "><label>Airport Name</label></div>
+                            <div class="input-group md:col-span-2">
+                                <select id="td-time-opt" onchange="toggleTransferTime('td')" required>
+                                    <option value="Today">Today</option>
+                                    <option value="Tomorrow">Tomorrow</option>
+                                    <option value="Specific">Specific Date & Time</option>
+                                </select><label>Timing</label>
+                            </div>
+                        </div>
+                        <div id="td-time-fields" class="hidden grid-cols-2 gap-3 mt-0">
+                            <div class="input-group"><input type="date" id="td-date"><label>Pickup Date</label></div>
+                            <div class="input-group"><input type="time" id="td-time"><label>Pickup Time</label></div>
+                        </div>
+                        <button type="submit" class="w-full py-4 mt-4 bg-brand-gold hover:bg-yellow-500 text-black font-bold rounded-xl shadow-lg transition flex justify-center items-center gap-2"><i class="fab fa-whatsapp text-xl"></i> Book Drop-off via WhatsApp</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <section id="visa" class="scroll-mt-28 reveal pt-10 border-t border-gray-200 dark:border-gray-800">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl md:text-4xl font-black mb-4">Fast Visa Application</h2>
+                <p class="text-gray-500 dark:text-gray-400 max-w-2xl mx-auto">Hassle-free visa processing for tourist, business, student, and medical travel.</p>
+            </div>
+
+            <div class="glass-card max-w-4xl mx-auto p-6 md:p-10 rounded-3xl shadow-xl">
+                <form onsubmit="handleVisaSubmit(event)">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-2">
+                        <div class="input-group md:col-span-2"><input type="text" id="v-name" required placeholder=" "><label>Full Name (As on Passport)</label></div>
+                        <div class="input-group"><input type="text" id="v-nat" required placeholder=" "><label>Nationality</label></div>
+                        <div class="input-group"><input type="text" id="v-pass" required placeholder=" "><label>Passport Number</label></div>
+                        <div class="input-group"><input type="tel" id="v-phone" required placeholder=" "><label>Phone Number</label></div>
+                        <div class="input-group"><input type="email" id="v-email" required placeholder=" "><label>Email Address</label></div>
+                        <div class="input-group"><input type="text" id="v-dest" required placeholder=" "><label>Destination Country</label></div>
+                        <div class="input-group">
+                            <select id="v-type" required>
+                                <option value="" disabled selected></option>
+                                <option value="Tourist">Tourist Visa</option>
+                                <option value="Business">Business Visa</option>
+                                <option value="Medical">Medical Visa</option>
+                                <option value="Student">Student Visa</option>
+                            </select><label>Visa Type</label>
+                            <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400"><i class="fa-solid fa-chevron-down"></i></div>
+                        </div>
+                        <div class="input-group"><input type="date" id="v-date" required><label>Expected Travel Date</label></div>
+                    </div>
+                    
+                    <div class="input-group mb-4">
+                        <textarea id="v-purpose" rows="2" required placeholder=" "></textarea><label>Detailed Purpose of Travel</label>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6 p-4 rounded-xl border border-dashed border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-slate-800/30">
+                        <div>
+                            <label class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2 block"><i class="fa-solid fa-file-arrow-up text-brand-gold mr-2"></i>Upload Passport Copy</label>
+                            <input type="file" required class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-brand-gold/10 file:text-brand-gold hover:file:bg-brand-gold/20 cursor-pointer">
+                        </div>
+                        <div>
+                            <label class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2 block"><i class="fa-solid fa-image text-brand-gold mr-2"></i>Upload Passport Photo</label>
+                            <input type="file" required class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-brand-accent/10 file:text-brand-accent hover:file:bg-brand-accent/20 cursor-pointer">
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <textarea id="v-notes" rows="2" placeholder=" "></textarea><label>Additional Notes (Optional)</label>
+                    </div>
+
+                    <button type="submit" class="w-full py-4 mt-2 bg-brand-gold text-black font-black text-lg rounded-xl shadow-lg hover:-translate-y-1 transition flex justify-center items-center gap-2"><i class="fab fa-whatsapp text-2xl"></i> Submit Application</button>
+                </form>
+            </div>
+        </section>
+
+        <section id="contact" class="scroll-mt-28 reveal pt-10 border-t border-gray-200 dark:border-gray-800">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl md:text-4xl font-black mb-4">Contact Sahal Travel</h2>
+                <p class="text-gray-500 dark:text-gray-400 max-w-2xl mx-auto">We are here to assist you 24/7. Reach out to us via phone or WhatsApp.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+                <a href="tel:+251964105458" class="glass-card p-8 rounded-3xl text-center hover:-translate-y-2 transition shadow-lg flex flex-col items-center">
+                    <div class="w-16 h-16 rounded-full bg-brand-accent/10 text-brand-accent text-2xl flex items-center justify-center mb-4"><i class="fa-solid fa-phone"></i></div>
+                    <h3 class="font-bold text-lg mb-1">Direct Phone Call</h3>
+                    <p class="text-gray-500 dark:text-gray-400 mb-4">+251 964 105 458</p>
+                    <span class="text-sm font-bold text-brand-accent">Call Now &rarr;</span>
+                </a>
+                
+                <a href="https://wa.me/251964105458" target="_blank" class="glass-card p-8 rounded-3xl text-center hover:-translate-y-2 transition shadow-lg flex flex-col items-center border-t-4 border-t-green-500">
+                    <div class="w-16 h-16 rounded-full bg-green-500/10 text-green-500 text-3xl flex items-center justify-center mb-4"><i class="fab fa-whatsapp"></i></div>
+                    <h3 class="font-bold text-lg mb-1">WhatsApp Chat</h3>
+                    <p class="text-gray-500 dark:text-gray-400 mb-4">+251 964 105 458</p>
+                    <span class="text-sm font-bold text-green-600 dark:text-green-400">Message Us &rarr;</span>
+                </a>
+
+                <div class="glass-card p-8 rounded-3xl text-center hover:-translate-y-2 transition shadow-lg flex flex-col items-center">
+                    <div class="w-16 h-16 rounded-full bg-brand-gold/10 text-brand-gold text-2xl flex items-center justify-center mb-4"><i class="fa-solid fa-location-dot"></i></div>
+                    <h3 class="font-bold text-lg mb-1">Our Location</h3>
+                    <p class="text-gray-500 dark:text-gray-400 mb-4">Jigjiga, Somali Region<br>Ethiopia</p>
+                    <a href="https://maps.google.com/?q=Jigjiga,Ethiopia" target="_blank" class="text-sm font-bold text-brand-gold hover:underline flex items-center gap-1"><i class="fa-solid fa-map"></i> Open Google Maps</a>
+                </div>
+            </div>
+            
+            <div class="mt-8 text-center glass-card max-w-md mx-auto p-4 rounded-xl shadow-md border border-gray-200 dark:border-gray-700">
+                <p class="text-sm font-semibold flex items-center justify-center gap-2"><i class="fa-solid fa-clock text-brand-gold"></i> Working Hours: 24 Hours / 7 Days a Week</p>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-brand-dark text-gray-300 py-12 border-t border-gray-800 mt-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+            <div class="lg:col-span-2">
+                <a href="#home" class="text-3xl font-bold tracking-tighter flex items-center gap-2 mb-4 text-white">
+                    <i class="fa-solid fa-plane-departure text-brand-gold"></i> SAHAL
+                </a>
+                <p class="text-sm font-light leading-relaxed mb-6 max-w-md">Your premium gateway to the world. We offer comprehensive travel solutions including luxury flights, exclusive hotels, VIP airport transfers, and reliable visa assistance in Jigjiga.</p>
+                <div class="flex space-x-3">
+                    <a href="tel:+251964105458" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-brand-gold hover:text-black transition shadow-lg"><i class="fa fa-phone"></i></a>
+                    <a href="https://wa.me/251964105458" target="_blank" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-green-500 hover:text-white transition shadow-lg"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+
+            <div>
+                <h4 class="text-white font-bold mb-6 uppercase tracking-wide text-sm">Quick Links</h4>
+                <ul class="space-y-3 text-sm font-light">
+                    <li><a href="#flights" class="hover:text-brand-gold transition">Flight Booking</a></li>
+                    <li><a href="#hotels" class="hover:text-brand-gold transition">Hotel Reservations</a></li>
+                    <li><a href="#transfers" class="hover:text-brand-gold transition">Airport Transfers</a></li>
+                    <li><a href="#visa" class="hover:text-brand-gold transition">Visa Application</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="text-white font-bold mb-6 uppercase tracking-wide text-sm">Contact Info</h4>
+                <ul class="space-y-4 text-sm font-light">
+                    <li class="flex items-center gap-3"><i class="fa-solid fa-phone text-brand-gold w-4"></i> <a href="tel:+251964105458" class="hover:text-white">+251 964 105 458</a></li>
+                    <li class="flex items-center gap-3"><i class="fab fa-whatsapp text-green-500 w-4 text-lg"></i> <a href="https://wa.me/251964105458" target="_blank" class="hover:text-white">+251 964 105 458</a></li>
+                    <li class="flex items-start gap-3"><i class="fa-solid fa-location-dot text-brand-gold w-4 mt-1"></i> <span>Jigjiga, Somali Region<br>Ethiopia</span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 mt-12 pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center text-xs font-light text-gray-500">
+            <p>&copy; <script>document.write(new Date().getFullYear())</script> Sahal Travel Agency. All Rights Reserved.</p>
+            <p class="mt-2 md:mt-0">Premium Travel Experience</p>
+        </div>
+    </footer>
+
+    <div id="hotel-modal" class="fixed inset-0 z-[100] hidden bg-black/80 backdrop-blur-sm overflow-y-auto pt-10 pb-10 flex items-start md:items-center justify-center opacity-0 transition-opacity duration-300">
+        <div class="glass-card max-w-2xl w-full mx-4 rounded-3xl shadow-2xl relative p-6 md:p-8 transform scale-95 transition-transform duration-300" id="hotel-modal-content">
+            <button onclick="closeModal('hotel-modal')" class="absolute top-4 right-4 w-10 h-10 bg-gray-200 dark:bg-gray-800 rounded-full flex items-center justify-center hover:bg-red-500 hover:text-white transition z-20 shadow-md"><i class="fa-solid fa-times"></i></button>
+            
+            <div class="mb-6 border-b border-gray-200 dark:border-gray-700 pb-4">
+                <h2 class="text-3xl font-black">Book <span id="h-room-type" class="text-brand-gold"></span></h2>
+                <p class="text-sm text-gray-500 mt-1">Rate: <span id="h-room-rate" class="font-bold text-brand-accent dark:text-white"></span> ETB / night</p>
+            </div>
+
+            <form onsubmit="handleHotelSubmit(event)">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="input-group md:col-span-2"><input type="text" id="h-name" required placeholder=" "><label>Full Name</label></div>
+                    <div class="input-group"><input type="tel" id="h-phone" required placeholder=" "><label>Phone Number</label></div>
+                    <div class="input-group"><input type="email" id="h-email" required placeholder=" "><label>Email Address</label></div>
+                    
+                    <div class="input-group"><input type="date" id="h-in" required onchange="calcHotelPrice()"><label>Check-in Date</label></div>
+                    <div class="input-group"><input type="date" id="h-out" required onchange="calcHotelPrice()"><label>Check-out Date</label></div>
+                    
+                    <div class="input-group"><input type="number" id="h-adults" min="1" value="1" required placeholder=" "><label>Adults</label></div>
+                    <div class="input-group"><input type="number" id="h-child" min="0" value="0" required placeholder=" "><label>Children</label></div>
+                    
+                    <div class="input-group md:col-span-2"><textarea id="h-req" rows="2" placeholder=" "></textarea><label>Special Requests (Optional)</label></div>
+                </div>
+
+                <div class="bg-gray-100 dark:bg-slate-800/50 p-4 rounded-xl mt-2 mb-4 flex justify-between items-center border border-gray-200 dark:border-gray-700">
+                    <div>
+                        <p class="text-xs text-gray-500 font-bold uppercase tracking-wider">Total <span id="h-nights-display">1</span> Night(s)</p>
+                    </div>
+                    <div class="text-right">
+                        <h3 class="text-2xl font-black text-brand-gold" id="h-total-price">0 ETB</h3>
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full py-4 bg-brand-accent hover:bg-blue-800 text-white font-bold rounded-xl shadow-lg transition flex justify-center items-center gap-2"><i class="fab fa-whatsapp text-xl"></i> Confirm Booking via WhatsApp</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="flight-loader" class="fixed inset-0 bg-brand-dark/95 backdrop-blur-xl z-[200] hidden flex-col items-center justify-center">
+        <div class="w-24 h-24 relative mb-8">
+            <div class="absolute inset-0 border-4 border-brand-gold/30 rounded-full"></div>
+            <div class="absolute inset-0 border-4 border-brand-gold rounded-full border-t-transparent animate-spin-slow"></div>
+            <i class="fa-solid fa-plane absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-3xl"></i>
+        </div>
+        <div class="text-center w-full max-w-md px-6">
+            <h2 class="text-2xl font-bold text-white mb-2 tracking-wide">Processing Booking...</h2>
+            <p class="text-brand-gold mb-6 font-mono text-sm" id="loader-text">Connecting to airline systems</p>
+            <div class="w-full bg-gray-800 rounded-full h-1 overflow-hidden">
+                <div id="loader-bar" class="bg-brand-gold h-1 rounded-full transition-all duration-300" style="width: 0%"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="payment-modal" class="fixed inset-0 z-[100] hidden bg-black/80 backdrop-blur-sm overflow-y-auto pt-10 pb-10 flex items-center justify-center opacity-0 transition-opacity duration-300">
+        <div class="glass-card max-w-md w-full mx-4 rounded-3xl shadow-2xl relative p-8 text-center transform scale-95 transition-transform duration-300" id="payment-modal-content">
+            <button onclick="closeModal('payment-modal')" class="absolute top-4 right-4 w-10 h-10 bg-gray-200 dark:bg-gray-800 rounded-full flex items-center justify-center hover:bg-red-500 hover:text-white transition shadow-md"><i class="fa-solid fa-times"></i></button>
+            
+            <div class="w-16 h-16 mx-auto bg-green-500/20 text-green-500 rounded-full flex items-center justify-center text-3xl mb-4"><i class="fa-solid fa-money-bill-transfer"></i></div>
+            <h2 class="text-2xl font-black mb-2">Manual Payment</h2>
+            
+            <div class="bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-gray-700 p-4 rounded-xl mb-6">
+                <p class="text-sm text-gray-500 mb-1 font-medium">Total Amount Required:</p>
+                <h3 class="text-3xl font-black text-brand-gold mb-2" id="pay-amount">0 ETB</h3>
+                <p class="text-xs text-gray-500 border-t border-gray-200 dark:border-gray-700 pt-3 mt-2">Please send your payment to this phone number and then press "I Have Paid".</p>
+            </div>
+            
+            <div class="bg-white dark:bg-slate-900 border-2 border-brand-accent p-4 rounded-2xl mb-6 relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-full h-1 bg-brand-accent"></div>
+                <p class="text-xs uppercase tracking-widest text-gray-500 mb-1 font-bold">Official Sahal Travel Number</p>
+                <h3 class="text-3xl font-black tracking-wider text-gray-900 dark:text-white">+251964105458</h3>
+            </div>
+
+            <div class="grid grid-cols-3 gap-2 mb-6">
+                <a href="tel:+251964105458" class="flex flex-col items-center justify-center p-3 glass rounded-xl hover:bg-brand-accent hover:text-white transition shadow-sm group">
+                    <i class="fa-solid fa-phone text-xl mb-1 text-gray-600 dark:text-gray-300 group-hover:text-white"></i><span class="text-[10px] font-bold uppercase">Call Number</span>
+                </a>
+                <a href="https://wa.me/251964105458" target="_blank" class="flex flex-col items-center justify-center p-3 glass rounded-xl hover:bg-green-500 hover:text-white transition shadow-sm group">
+                    <i class="fab fa-whatsapp text-xl mb-1 text-green-500 group-hover:text-white"></i><span class="text-[10px] font-bold uppercase">WhatsApp</span>
+                </a>
+                <button type="button" onclick="copyToClipboard('+251964105458')" class="flex flex-col items-center justify-center p-3 glass rounded-xl hover:bg-brand-gold hover:text-black transition shadow-sm group">
+                    <i class="fa-regular fa-copy text-xl mb-1 text-gray-600 dark:text-gray-300 group-hover:text-black"></i><span class="text-[10px] font-bold uppercase">Copy Number</span>
+                </button>
+            </div>
+
+            <a href="tel:+251964105458" class="block w-full py-3 mb-3 bg-brand-accent text-white font-bold rounded-xl shadow-md hover:bg-blue-800 transition flex items-center justify-center gap-2">
+                <i class="fa-solid fa-mobile-screen"></i> Send Payment Now
+            </a>
+            
+            <button onclick="confirmFlightPayment()" class="w-full py-4 bg-brand-gold text-black font-black text-lg rounded-xl shadow-lg hover:bg-yellow-500 transition border border-yellow-600">
+                I Have Paid
+            </button>
+        </div>
+    </div>
+
+    <div id="success-modal" class="fixed inset-0 z-[300] hidden bg-brand-dark/95 backdrop-blur-md flex items-center justify-center opacity-0 transition-opacity duration-300">
+        <div class="text-center p-8 rounded-3xl max-w-sm w-full">
+            <svg class="w-24 h-24 mx-auto mb-6" viewBox="0 0 52 52">
+                <circle class="success-circle" cx="26" cy="26" r="25" fill="none"/>
+                <path class="success-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+            </svg>
+            <h2 class="text-3xl font-black text-white mb-2">Booking Prepared</h2>
+            <p class="text-brand-gold text-lg mb-4">Redirecting to WhatsApp for final confirmation...</p>
+            <div class="flex justify-center"><div class="w-8 h-8 border-4 border-gray-600 border-t-white rounded-full animate-spin"></div></div>
+        </div>
+    </div>
+
+    <script>
+        // Data Store
+        let currentFlightData = {};
+        const WHATSAPP_NUM = "251964105458";
+
+        // Initialization
+        document.addEventListener('DOMContentLoaded', () => {
+            initTheme();
+            initScrollSpy();
+            initDates();
+            calcFlightPreview();
+        });
+
+        // Theme Management
+        function initTheme() {
+            const themeBtn = document.getElementById('themeToggle');
+            const themeIcon = document.getElementById('themeIcon');
+            
+            function setTheme(isDark) {
+                document.documentElement.classList.toggle('dark', isDark);
+                themeIcon.classList.replace(isDark ? 'fa-moon' : 'fa-sun', isDark ? 'fa-sun' : 'fa-moon');
+                localStorage.theme = isDark ? 'dark' : 'light';
+            }
+            
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            setTheme(localStorage.theme === 'dark' || (!('theme' in localStorage) && prefersDark));
+            
+            themeBtn.addEventListener('click', () => {
+                setTheme(!document.documentElement.classList.contains('dark'));
+            });
+        }
+
+        // Header & ScrollSpy
+        function initScrollSpy() {
+            const header = document.getElementById('main-header');
+            const headerText = header.querySelector('.header-text');
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            window.addEventListener('scroll', () => {
+                // Header Styling
+                if (window.scrollY > 50) {
+                    header.classList.remove('bg-transparent', 'py-4');
+                    header.classList.add('bg-white', 'dark:bg-brand-dark', 'shadow-md', 'py-2');
+                    headerText.classList.remove('text-white', 'drop-shadow-md');
+                    headerText.classList.add('text-brand-accent', 'dark:text-white');
+                } else {
+                    header.classList.add('bg-transparent', 'py-4');
+                    header.classList.remove('bg-white', 'dark:bg-brand-dark', 'shadow-md', 'py-2');
+                    headerText.classList.add('text-white', 'drop-shadow-md');
+                    headerText.classList.remove('text-brand-accent', 'dark:text-white');
+                }
+
+                // Active Link Highlighting
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    if (scrollY >= sectionTop - 150) { current = section.getAttribute('id'); }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${current}`) { link.classList.add('active'); }
+                });
+            });
+
+            // Mobile Menu
+            document.getElementById('mobileMenuBtn').addEventListener('click', () => {
+                const menu = document.getElementById('mobileMenu');
+                menu.classList.toggle('hidden');
+            });
+            document.querySelectorAll('.mobile-link').forEach(link => {
+                link.addEventListener('click', () => document.getElementById('mobileMenu').classList.add('hidden'));
+            });
+
+            // Scroll Reveal Animation
+            const observer = new IntersectionObserver((entries) => { 
+                entries.forEach(entry => { 
+                    if (entry.isIntersecting) entry.target.classList.add('active'); 
+                }); 
+            }, { threshold: 0.1 });
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        }
+
+        // Setup default dates
+        function initDates() {
+            const today = new Date().toISOString().split('T')[0];
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            const tmrStr = tomorrow.toISOString().split('T')[0];
+            
+            document.getElementById('f-date').value = today;
+            document.getElementById('f-date').min = today;
+            document.getElementById('f-ret').min = today;
+            
+            document.getElementById('h-in').value = today;
+            document.getElementById('h-in').min = today;
+            document.getElementById('h-out').value = tmrStr;
+            document.getElementById('h-out').min = tmrStr;
+        }
+
+        // Toast Notification System
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type === 'error' ? 'bg-red-600' : 'bg-gray-900'} flex items-center gap-2`;
+            toast.innerHTML = `<i class="fa-solid ${type === 'error' ? 'fa-circle-exclamation' : 'fa-circle-check'} text-brand-gold"></i> ${message}`;
+            container.appendChild(toast);
+            
+            setTimeout(() => toast.classList.add('show'), 10);
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('Number copied to clipboard!');
+            }).catch(err => {
+                showToast('Failed to copy', 'error');
+            });
+        }
+
+        // Modal Utilities
+        function openModal(id) {
+            const modal = document.getElementById(id);
+            const content = document.getElementById(`${id}-content`);
+            modal.classList.remove('hidden');
+            
+            // Allow display block to render before animating opacity
+            requestAnimationFrame(() => {
+                modal.classList.remove('opacity-0');
+                if(content) content.classList.remove('scale-95');
+            });
+        }
+
+        function closeModal(id) {
+            const modal = document.getElementById(id);
+            const content = document.getElementById(`${id}-content`);
+            modal.classList.add('opacity-0');
+            if(content) content.classList.add('scale-95');
+            setTimeout(() => modal.classList.add('hidden'), 300);
+        }
+
+        function processWhatsApp(message) {
+            const modal = document.getElementById('success-modal');
+            modal.classList.remove('hidden');
+            setTimeout(() => modal.classList.remove('opacity-0'), 10);
+            
+            setTimeout(() => {
+                modal.classList.add('opacity-0');
+                setTimeout(() => modal.classList.add('hidden'), 300);
+                window.open(`https://wa.me/${WHATSAPP_NUM}?text=${encodeURIComponent(message)}`, '_blank');
+            }, 2000);
+        }
+
+        // Formater
+        function formatMoney(amount) {
+            return amount.toLocaleString() + ' ETB';
+        }
+
+        /* --- 1. FLIGHT BOOKING LOGIC --- */
+        const FLIGHT_RATES = { Economy: 15000, Business: 35000, FirstClass: 60000 };
+        
+        function calcFlightPreview() {
+            const pax = parseInt(document.getElementById('f-pax').value) || 1;
+            const travelClass = document.getElementById('f-class').value;
+            const total = FLIGHT_RATES[travelClass] * pax;
+            document.getElementById('f-total-price').innerText = formatMoney(total);
+            return total;
+        }
+
+        function handleFlightSearch(e) {
+            e.preventDefault();
+            const total = calcFlightPreview();
+            
+            // Save data for later step
+            currentFlightData = {
+                name: document.getElementById('f-name').value,
+                phone: document.getElementById('f-phone').value,
+                dep: document.getElementById('f-dep').value,
+                dest: document.getElementById('f-dest').value,
+                date: document.getElementById('f-date').value,
+                ret: document.getElementById('f-ret').value,
+                pax: document.getElementById('f-pax').value,
+                cls: document.getElementById('f-class').options[document.getElementById('f-class').selectedIndex].text,
+                totalStr: formatMoney(total)
+            };
+
+            // Loading Animation
+            const loader = document.getElementById('flight-loader');
+            const bar = document.getElementById('loader-bar');
+            const texts = ["Connecting to airline...", "Checking availability...", "Reserving seats...", "Generating invoice..."];
+            const textEl = document.getElementById('loader-text');
+            
+            loader.classList.remove('hidden');
+            loader.style.display = 'flex';
+            
+            let pct = 0;
+            let textIdx = 0;
+            
+            const interval = setInterval(() => {
+                pct += 2;
+                bar.style.width = pct + '%';
+                
+                if (pct % 25 === 0 && textIdx < texts.length) {
+                    textEl.innerText = texts[textIdx++];
+                }
+                
+                if(pct >= 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        loader.style.display = 'none';
+                        loader.classList.add('hidden');
+                        document.getElementById('pay-amount').innerText = currentFlightData.totalStr;
+                        openModal('payment-modal');
+                    }, 400);
+                }
+            }, 40);
+        }
+
+        function confirmFlightPayment() {
+            closeModal('payment-modal');
+            const msg = `Hello Sahal Travel,\n\nI have completed the manual payment for my flight. Please verify.\n\n*Flight Details*\nPassenger Name: ${currentFlightData.name}\nPhone: ${currentFlightData.phone}\nDeparture: ${currentFlightData.dep}\nDestination: ${currentFlightData.dest}\nDate: ${currentFlightData.date}\nReturn Date: ${currentFlightData.ret || 'N/A'}\nPassengers: ${currentFlightData.pax}\nClass: ${currentFlightData.cls}\nTotal Price: ${currentFlightData.totalStr}\n\nPayment Completed.`;
+            processWhatsApp(msg);
+        }
+
+        /* --- 2. HOTEL BOOKING LOGIC --- */
+        let currentHotelRate = 0;
+        
+        function openHotelModal(type, rate) {
+            document.getElementById('h-room-type').innerText = type;
+            document.getElementById('h-room-rate').innerText = rate.toLocaleString();
+            currentHotelRate = rate;
+            calcHotelPrice();
+            openModal('hotel-modal');
+        }
+
+        function calcHotelPrice() {
+            const inDate = new Date(document.getElementById('h-in').value);
+            const outDate = new Date(document.getElementById('h-out').value);
+            
+            // Validate Check-out is after Check-in
+            if(outDate <= inDate) {
+                const nextDay = new Date(inDate);
+                nextDay.setDate(nextDay.getDate() + 1);
+                document.getElementById('h-out').value = nextDay.toISOString().split('T')[0];
+                return calcHotelPrice();
+            }
+            
+            const timeDiff = outDate.getTime() - inDate.getTime();
+            const nights = Math.ceil(timeDiff / (1000 * 3600 * 24)) || 1;
+            
+            document.getElementById('h-nights-display').innerText = nights;
+            document.getElementById('h-total-price').innerText = formatMoney(nights * currentHotelRate);
+            return { nights, total: formatMoney(nights * currentHotelRate) };
+        }
+
+        function handleHotelSubmit(e) {
+            e.preventDefault();
+            const calc = calcHotelPrice();
+            const msg = `Hello Sahal Travel,\n\nI would like to reserve a hotel room.\n\nRoom Type: ${document.getElementById('h-room-type').innerText}\nCheck-in: ${document.getElementById('h-in').value}\nCheck-out: ${document.getElementById('h-out').value}\nAdults: ${document.getElementById('h-adults').value}\nChildren: ${document.getElementById('h-child').value}\nTotal Price: ${calc.total} (${calc.nights} nights)\nGuest Name: ${document.getElementById('h-name').value}\nPhone: ${document.getElementById('h-phone').value}\nEmail: ${document.getElementById('h-email').value}\nSpecial Requests: ${document.getElementById('h-req').value || 'None'}\n\nPlease confirm my booking.`;
+            closeModal('hotel-modal');
+            processWhatsApp(msg);
+        }
+
+        /* --- 3. AIRPORT TRANSFER LOGIC --- */
+        function toggleTransferTime(prefix) {
+            const opt = document.getElementById(`${prefix}-time-opt`).value;
+            const fields = document.getElementById(`${prefix}-time-fields`);
+            if (opt === 'Now' || opt === 'Today' || opt === 'Tomorrow') {
+                fields.classList.add('hidden');
+                document.getElementById(`${prefix}-date`).removeAttribute('required');
+                document.getElementById(`${prefix}-time`).removeAttribute('required');
+            } else {
+                fields.classList.remove('hidden');
+                document.getElementById(`${prefix}-date`).setAttribute('required', 'true');
+                document.getElementById(`${prefix}-time`).setAttribute('required', 'true');
+            }
+        }
+
+        function handleTransfer(e, type) {
+            e.preventDefault();
+            let msg = '';
+            if (type === 'Pickup') {
+                const timing = document.getElementById('tp-time-opt').value === 'Now' 
+                    ? 'Now' 
+                    : `${document.getElementById('tp-date').value} at ${document.getElementById('tp-time').value}`;
+                    
+                msg = `Hello Sahal Travel,\n\nI am currently at the airport.\nPlease send a driver.\n\nAirport: ${document.getElementById('tp-airport').value}\nFlight Number: ${document.getElementById('tp-flight').value}\nPassengers: ${document.getElementById('tp-pax').value}\nArrival Time: ${timing}\nPhone: ${document.getElementById('tp-phone').value}\nName: ${document.getElementById('tp-name').value}`;
+            } else {
+                const opt = document.getElementById('td-time-opt').value;
+                let dateStr, timeStr;
+                if(opt === 'Specific') {
+                    dateStr = document.getElementById('td-date').value;
+                    timeStr = document.getElementById('td-time').value;
+                } else {
+                    dateStr = opt; // Today or Tomorrow
+                    timeStr = "As agreed";
+                }
+                
+                msg = `Hello Sahal Travel,\n\nI need airport transportation.\n\nPickup Address: ${document.getElementById('td-loc').value}\nAirport: ${document.getElementById('td-airport').value}\nPassengers: ${document.getElementById('td-pax').value}\nPickup Date: ${dateStr}\nPickup Time: ${timeStr}\nPhone: ${document.getElementById('td-phone').value}\nName: ${document.getElementById('td-name').value}\n\nPlease confirm my booking.`;
+            }
+            processWhatsApp(msg);
+        }
+
+        /* --- 4. VISA APPLICATION LOGIC --- */
+        function handleVisaSubmit(e) {
+            e.preventDefault();
+            const typeSelect = document.getElementById('v-type');
+            const msg = `Hello Sahal Travel,\n\nI am applying for a Visa.\n\nFull Name: ${document.getElementById('v-name').value}\nNationality: ${document.getElementById('v-nat').value}\nPassport Number: ${document.getElementById('v-pass').value}\nPhone: ${document.getElementById('v-phone').value}\nEmail: ${document.getElementById('v-email').value}\nDestination Country: ${document.getElementById('v-dest').value}\nVisa Type: ${typeSelect.options[typeSelect.selectedIndex].text}\nTravel Date: ${document.getElementById('v-date').value}\nPurpose: ${document.getElementById('v-purpose').value}\nAdditional Notes: ${document.getElementById('v-notes').value || 'None'}\n\n*Note: Passport copy and photo are ready to be sent securely.*\n\nPlease assist with my application.`;
+            processWhatsApp(msg);
+        }
+    </script>
+</body>
+</html>
